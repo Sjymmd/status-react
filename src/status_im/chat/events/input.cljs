@@ -465,13 +465,14 @@
   "no command detected, when not empty, proceed by sending text message without command processing"
   [db cofx input-text current-chat-id current-public-key]
   (when-not (string/blank? input-text)
-    (send-message-events/prepare-message (assoc cofx :db (-> db
-                                                             (set-chat-input-metadata nil)
-                                                             (set-chat-input-text nil)))
-                                         {:message-text  input-text
-                                          :chat-id       current-chat-id
-                                          :identity      current-public-key
-                                          :address       (:accounts/current-account-id db)})))
+    (message-model/send-message (assoc cofx :db (-> db
+                                                    (set-chat-input-metadata nil)
+                                                    (set-chat-input-text nil)))
+                                {:message-text input-text
+                                 :chat-id      current-chat-id
+                                 :identity     current-public-key
+                                 :address      (:accounts/current-account-id db)})))
+
 
 (handlers/register-handler-fx
   :send-current-message

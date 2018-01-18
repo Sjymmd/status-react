@@ -15,7 +15,7 @@
 
 (re-frame/reg-fx
   :send-notification
-  (fn [[fcm-token message]]
+  (fn [fcm-token]
     (log/debug "send-notification fcm-token: " fcm-token)
     (status/notify fcm-token #(log/debug "send-notification cb result: " %))))
 
